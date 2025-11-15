@@ -1,0 +1,15 @@
+{
+  "name": "scarce-fee-tracker",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "trackFeesLocked.mjs",
+  "scripts": {
+    "start": "node trackFeesLocked.mjs"
+  },
+  "dependencies": {
+    "@coral-xyz/anchor": "^0.32.1",
+    "@solana/web3.js": "^1.98.4",
+    "google-spreadsheet": "^5.0.2",
+    "googleapis": "^144.0.0"
+  }
+}
