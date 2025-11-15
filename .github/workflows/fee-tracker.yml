@@ -1,0 +1,36 @@
+name: Daily SCARCE Fee Tracker
+
+on:
+  schedule:
+    # Every day at 15:00 UTC
+    - cron: "0 15 * * *"
+  workflow_dispatch: {}   # allow manual runs
+
+jobs:
+  run-fee-tracker:
+    runs-on: ubuntu-latest
+
+    env:
+      GSHEET_ID: ${{ secrets.GSHEET_ID }}
+      GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/service-account.json
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Write service account JSON
+        run: |
+          cat << 'EOF' > service-account.json
+          ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+          EOF
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tracker script
+        run: node trackFeesLocked.mjs
